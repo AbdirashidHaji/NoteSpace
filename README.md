@@ -129,29 +129,15 @@ All protected routes require `Authorization: Bearer <token>` and are scoped to t
 - CORS restricted to the configured frontend origin
 - Secrets only in gitignored `.env`
 
-## Deployment (GitHub Pages)
-
-The frontend can be hosted for free on GitHub Pages via GitHub Actions.
-
-1. Push this repository to GitHub (remote: `https://github.com/AbdirashidHaji/NoteSpace.git`).
-2. In the GitHub repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. The included workflow at `.github/workflows/deploy-frontend.yml` builds and deploys the Vite app to Pages on every push to `master`.
-4. Set a repository variable `VITE_API_URL` (Settings → Secrets and variables → Actions → Variables) to your deployed backend URL, e.g. `https://your-backend.onrender.com`. If unset, it defaults to `http://localhost:4000`.
-5. The site will be available at `https://<username>.github.io/NoteSpace/`.
-
-> The backend (Express + MySQL) cannot run on GitHub Pages; deploy it to a Node host such as Render or Railway and point the frontend at its public URL via `VITE_API_URL`.
-
 ## Deployment (Render)
 
-Both frontend and backend can be hosted on Render:
+Both frontend and backend can be hosted on Render.
 
 1. Push this repository to GitHub.
 2. In the Render dashboard: **New → Blueprint**, select this repo (or create each service manually).
 3. **Backend** (`notespace-backend`): runtime `node`, build `cd server && npm install`, start `cd server && npm start`. Provide the MySQL env vars (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`) from a reachable MySQL instance (Render does not provide managed MySQL), plus `JWT_SECRET`.
 4. **Frontend** (`notespace-frontend`): runtime `static`, build `cd client && npm install && npm run build`, publish `client/dist`. Set `VITE_API_URL` to the backend's public URL.
 5. The backend `CORS_ORIGIN` must be set to the frontend's public URL.
-
-Alternatively, deploy the frontend to GitHub Pages (see above) and the backend to Render.
 
 ## Environment variables for hosting
 
@@ -169,7 +155,7 @@ Alternatively, deploy the frontend to GitHub Pages (see above) and the backend t
 | DB_NAME | `notespace` |
 | JWT_SECRET | `<generated-or-existing-secret>` |
 
-### Frontend (Vercel — `notespace-frontend`)
+### Frontend (Render — `notespace-frontend`)
 
 | Key | Value |
 |---|---|
