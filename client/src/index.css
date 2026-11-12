@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply bg-surface-muted text-slate-800 dark:bg-surface-dark dark:text-slate-200 transition-colors duration-200;
+  }
+  ::selection {
+    @apply bg-primary-200/60 dark:bg-primary-500/40;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+      transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500
+      focus-visible:ring-offset-2 dark:focus-visible:ring-offset-surface-dark disabled:opacity-50
+      disabled:pointer-events-none;
+  }
+  .btn-primary {
+    @apply btn bg-primary-600 text-white shadow-soft hover:bg-primary-700 active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply btn bg-white text-slate-700 border border-slate-200 shadow-soft hover:bg-slate-50
+      dark:bg-surface-dark-2 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-800;
+  }
+  .btn-ghost {
+    @apply btn text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700 active:scale-[0.98];
+  }
+  .input {
+    @apply w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-800
+      placeholder-slate-400 shadow-soft transition-all duration-150 focus:border-primary-400
+      focus:outline-none focus:ring-2 focus:ring-primary-500/20
+      dark:bg-surface-dark-2 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300;
+  }
+  .card {
+    @apply rounded-xl border border-slate-200/80 bg-white shadow-card
+      dark:border-slate-800 dark:bg-surface-dark-2;
+  }
+}
+
+/* ---------- Rich text editor ---------- */
+.editor-content {
+  @apply min-h-[55vh] w-full text-[15px] leading-relaxed text-slate-800 outline-none
+    dark:text-slate-200;
+}
+.editor-content:empty::before,
+.editor-content:focus:empty::before {
+  content: attr(data-placeholder);
+  @apply text-slate-400 dark:text-slate-500 pointer-events-none;
+}
+.editor-content h1 { @apply mb-3 mt-5 text-2xl font-bold; }
+.editor-content h2 { @apply mb-2.5 mt-4 text-xl font-semibold; }
+.editor-content h3 { @apply mb-2 mt-3 text-lg font-semibold; }
+.editor-content p { @apply my-1.5; }
+.editor-content ul { @apply my-2 list-disc pl-6; }
+.editor-content ol { @apply my-2 list-decimal pl-6; }
+.editor-content blockquote {
+  @apply my-3 border-l-4 border-primary-300 pl-3 text-slate-600 dark:border-primary-500 dark:text-slate-300;
+}
+.editor-content pre {
+  @apply my-3 overflow-x-auto rounded-lg bg-slate-100 p-3 font-mono text-sm dark:bg-slate-800;
+}
+.editor-content a {
+  @apply text-primary-600 underline decoration-primary-300 underline-offset-2 hover:text-primary-700
+    dark:text-primary-400 dark:decoration-primary-600;
+}
+.editor-content ul.checklist { @apply my-2 list-none pl-0; }
+.editor-content ul.checklist li {
+  @apply relative flex items-start gap-2 rounded px-1 py-0.5;
+}
+.editor-content ul.checklist li::before {
+  content: '';
+  @apply mt-[3px] h-4 w-4 shrink-0 rounded-[4px] border-2 border-slate-300 dark:border-slate-500;
+}
+.editor-content ul.checklist li.checked::before {
+  @apply border-primary-500 bg-primary-500;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M6.2 11.4 3.6 8.8l1-1 1.6 1.6 4.2-4.2 1 1z'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+}
+.editor-content ul.checklist li.checked { @apply text-slate-400 line-through dark:text-slate-500; }
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(148 163 184 / 0.5) transparent;
+}
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { @apply rounded-full bg-slate-300/70 dark:bg-slate-600/60; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* Search result highlighting */
+mark.hl {
+  @apply rounded bg-amber-200/80 px-0.5 text-slate-900 dark:bg-amber-400/40 dark:text-amber-100;
+}
