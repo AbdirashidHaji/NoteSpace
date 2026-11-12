@@ -25,7 +25,7 @@ services:
       - key: PORT
         value: 10000
       - key: CORS_ORIGIN
-        value: https://<your-frontend-url>
+        sync: false
       - key: DB_HOST
         sync: false
       - key: DB_PORT

@@ -153,6 +153,28 @@ Both frontend and backend can be hosted on Render:
 
 Alternatively, deploy the frontend to GitHub Pages (see above) and the backend to Render.
 
+## Environment variables for hosting
+
+### Backend (Render — `notespace-backend`)
+
+| Key | Value |
+|---|---|
+| NODE_VERSION | 20 |
+| PORT | 10000 |
+| CORS_ORIGIN | `https://<vercel-frontend-url>` (e.g. `https://your-project.vercel.app`) |
+| DB_HOST | `<your-mysql-host>` |
+| DB_PORT | 3306 |
+| DB_USER | `<your-mysql-user>` |
+| DB_PASSWORD | `<your-mysql-password>` |
+| DB_NAME | `notespace` |
+| JWT_SECRET | `<generated-or-existing-secret>` |
+
+### Frontend (Vercel — `notespace-frontend`)
+
+| Key | Value |
+|---|---|
+| VITE_API_URL | `https://<render-backend-url>` (e.g. `https://notespace-backend.onrender.com`) |
+
 ## Troubleshooting
 
 | Symptom | Fix |
