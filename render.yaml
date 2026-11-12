@@ -1,0 +1,55 @@
+# Render Infrastructure as Code — hosts both frontend and backend for NoteSpace.
+# Deploy: push this repo, then in the Render dashboard use "New +" → "Blueprint"
+# (or create services manually following the comments in each block.
+
+databases: []
+
+services:
+  # ---------------------------------------------------------------------
+  # Backend API (Express + MySQL)
+  # NOTE: Render does not provide managed MySQL. The DB_* values below are
+  # marked sync:false because they come from your own MySQL provider / local env.
+  # For a hosted deployment, point DB_HOST/DB_PORT/DB_USER/DB_PASSWORD/DB_NAME
+  # at a reachable MySQL instance (e.g. ClearDB, Aiven, Railway, or your own).
+  # ---------------------------------------------------------------------
+  - type: web
+    name: notespace-backend
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 10000
+      - key: CORS_ORIGIN
+        value: https://<your-frontend-url>
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: notespace
+      - key: JWT_SECRET
+        generateValue: true
+
+  # ---------------------------------------------------------------------
+  # Frontend (Vite static build)
+  # Deployed by Render as a static web service.
+  # ---------------------------------------------------------------------
+  - type: web
+    name: notespace-frontend
+    runtime: static
+    buildCommand: cd client && npm install && npm run build
+    publishDir: client/dist
+    envVars:
+      - key: VITE_BASE
+        value: /NoteSpace/
+      - key: VITE_API_URL
+        value: https://<your-backend-url>

@@ -141,6 +141,18 @@ The frontend can be hosted for free on GitHub Pages via GitHub Actions.
 
 > The backend (Express + MySQL) cannot run on GitHub Pages; deploy it to a Node host such as Render or Railway and point the frontend at its public URL via `VITE_API_URL`.
 
+## Deployment (Render)
+
+Both frontend and backend can be hosted on Render:
+
+1. Push this repository to GitHub.
+2. In the Render dashboard: **New → Blueprint**, select this repo (or create each service manually).
+3. **Backend** (`notespace-backend`): runtime `node`, build `cd server && npm install`, start `cd server && npm start`. Provide the MySQL env vars (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`) from a reachable MySQL instance (Render does not provide managed MySQL), plus `JWT_SECRET`.
+4. **Frontend** (`notespace-frontend`): runtime `static`, build `cd client && npm install && npm run build`, publish `client/dist`. Set `VITE_API_URL` to the backend's public URL.
+5. The backend `CORS_ORIGIN` must be set to the frontend's public URL.
+
+Alternatively, deploy the frontend to GitHub Pages (see above) and the backend to Render.
+
 ## Troubleshooting
 
 | Symptom | Fix |
